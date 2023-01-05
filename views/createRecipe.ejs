@@ -1,0 +1,21 @@
+<%- include('partials/header', {title:"Create Opponent"}) -%>
+
+<h2>Create a New Opponent!</h2>
+
+<form action="/createRecipe" method="POST">
+  <label for="name">Name:</label>
+  <input type="text" id="name" name="recipeName" value=""><br>
+  <label for="photo">Link to Photo:</label>
+  <input type="text" id="photo" name="recipePhoto" value=""><br>
+  <select name="numIngredients">
+    <option selected="selected" value="1"></option>
+    <%for(let i = 2; i <20; i++)%>
+      <option value=<%=i.toString()%>><%=i%></option>
+    <%}%>
+  </select>
+  <br><br>
+  <input type="submit" value="Create a new opponent!">
+
+</form>
+
+<%- include('partials/footer') -%>

@@ -133,24 +133,24 @@ app.get('/opponentCreate', function(request, response) {
     response.render("opponentCreate");
 });
 
-app.post('/opponentCreate', function(request, response) {
-    let opponentName = request.body.opponentName;
-    let opponentPhoto = request.body.opponentPhoto;
-    if(opponentName&&opponentPhoto){
-      let opponents = JSON.parse(fs.readFileSync('data/opponents.json'));
-      let newOpponent={
-        "name": opponentName,
-        "photo": opponentPhoto,
+app.post('/createRecipe', function(request, response) {
+    let recipeName = request.body.recipeName;
+    let recipePhoto = request.body.recipePhoto;
+    if(recipeName&&recipePhoto){
+      let recipies = JSON.parse(fs.readFileSync('data/opponents.json'));
+      let newRecipe={
+        "name": recipeName,
+        "photo": recipePhoto,
         "win":0,
         "lose": 0,
         "tie": 0,
       }
-      opponents[opponentName] = newOpponent;
-      fs.writeFileSync('data/opponents.json', JSON.stringify(opponents));
+      recipies[recipeName] = newRecipe;
+      fs.writeFileSync('data/recipies.json', JSON.stringify(recipies));
 
       response.status(200);
       response.setHeader('Content-Type', 'text/html')
-      response.redirect("/opponent/"+opponentName);
+      response.redirect("/recipies/"+recipeName);
     }else{
       response.status(400);
       response.setHeader('Content-Type', 'text/html')
