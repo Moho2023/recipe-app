@@ -130,15 +130,17 @@ app.get('/opponent/:opponentName', function(request, response) {
 app.get('/createRecipe', function(request, response) {
     response.status(200);
     response.setHeader('Content-Type', 'text/html')
-    response.render("createRecipe");
+    response.render("createRecipe", {
+        i:
+    });
 });
 
 app.post('/createRecipe', function(request, response) {
     let recipeName = request.body.recipeName; //string
-    let recipeAuthor = request.body.recipeAuthor; //string
-    let recipeTime = request.body.recipeTime; //minutes in integer values
-    let recipeDifficulty = request.body.recipeDifficulty; //integer from a scale of 1 to 3 : beginner, intermediate, expert
-    let recipeImg = request.body.Img; //image
+  //  let recipeAuthor = request.body.recipeAuthor; //string
+    //let recipeTime = request.body.recipeTime; //minutes in integer values
+   // let recipeDifficulty = request.body.recipeDifficulty; //integer from a scale of 1 to 3 : beginner, intermediate, expert
+    let recipeImg = request.body.recipePhoto; //image
     if(opponentName&&opponentPhoto){
       let opponents = JSON.parse(fs.readFileSync('data/opponents.json'));
       let newOpponent={
@@ -185,3 +187,4 @@ app.listen(port, function() {
  */
 
 //
+
