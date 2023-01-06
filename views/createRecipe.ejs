@@ -9,8 +9,8 @@
   <input type="text" id="photo" name="recipePhoto" value=""><br>
   <select name="numIngredients">
     <option selected="selected" value="1"></option>
-    <%for(let i = 2; i <20; i++)%>
-      <option value=<%=i.toString()%>><%=i%></option>
+    <%for(let i = 1; i <20; i++){%>
+      <option value=<%i.toString()%>><%=i%></option>
     <%}%>
   </select>
   <br><br>
