@@ -130,9 +130,7 @@ app.get('/opponent/:opponentName', function(request, response) {
 app.get('/createRecipe', function(request, response) {
     response.status(200);
     response.setHeader('Content-Type', 'text/html')
-    response.render("createRecipe", {
-        i:
-    });
+    response.render("createRecipe")
 });
 
 app.post('/createRecipe', function(request, response) {
@@ -141,28 +139,8 @@ app.post('/createRecipe', function(request, response) {
     //let recipeTime = request.body.recipeTime; //minutes in integer values
    // let recipeDifficulty = request.body.recipeDifficulty; //integer from a scale of 1 to 3 : beginner, intermediate, expert
     let recipeImg = request.body.recipePhoto; //image
-    if(opponentName&&opponentPhoto){
-      let opponents = JSON.parse(fs.readFileSync('data/opponents.json'));
-      let newOpponent={
-        "name": opponentName,
-        "photo": opponentPhoto,
-        "win":0,
-        "lose": 0,
-        "tie": 0,
-      }
-      opponents[opponentName] = newOpponent;
-      fs.writeFileSync('data/opponents.json', JSON.stringify(opponents));
-
-      response.status(200);
-      response.setHeader('Content-Type', 'text/html')
-      response.redirect("/opponent/"+opponentName);
-    }else{
-      response.status(400);
-      response.setHeader('Content-Type', 'text/html')
-      response.render("error", {
-        "errorCode":"400"
-      });
-    }
+   console.log(recipeName);
+   response.render("../index")
 });
 
 // Because routes/middleware are applied in order,
