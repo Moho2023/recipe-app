@@ -102,20 +102,17 @@ app.get('/scores', function(request, response) {
   });
 });
 
-app.get('/opponent/:opponentName', function(request, response) {
-  let opponents = JSON.parse(fs.readFileSync('data/opponents.json'));
+app.get('/recipe/:recipeName', function(request, response) {
+  let recipies = JSON.parse(fs.readFileSync('data/recipiess.json'));
 
   // using dynamic routes to specify resource request information
-  let opponentName = request.params.opponentName;
+  let recipeName = request.params.recipeName;
 
-  if(opponents[opponentName]){
-    opponents[opponentName].win_percent = (opponents[opponentName].win/parseFloat(opponents[opponentName].win+opponents[opponentName].lose+opponents[opponentName].tie) * 100).toFixed(2);
-    if(opponents[opponentName].win_percent=="NaN") opponents[opponentName].win_percent=0;
-
+  if(recipies[recipeName]){
     response.status(200);
     response.setHeader('Content-Type', 'text/html')
-    response.render("opponentDetails",{
-      opponent: opponents[opponentName]
+    response.render("recipeDetails",{
+      recipe: recipies[recipeName]
     });
 
   }else{
@@ -140,7 +137,7 @@ app.post('/createRecipe', function(request, response) {
    // let recipeDifficulty = request.body.recipeDifficulty; //integer from a scale of 1 to 3 : beginner, intermediate, expert
     let recipeImg = request.body.recipePhoto; //image
    console.log(recipeName);
-   response.render("../index")
+   response.render("index")
 });
 
 // Because routes/middleware are applied in order,
