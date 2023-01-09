@@ -131,12 +131,24 @@ app.get('/createRecipe', function(request, response) {
 });
 
 app.post('/createRecipe', function(request, response) {
-    let recipeName = request.body.recipeName; //string
+    let recipeName = request.body.recipeName;
+    console.log(recipeName)
+    let ingredientNames = []
+    let ingredientQuantities = []
+    for(let i = 1; i < 21; i++){
+      let a = "ingredient" + i.toString()
+      ingredientNames.push(request.body[a])
+
+      let b = "quantity" + i.toString()
+      ingredientQuantities.push(request.body[b])
+    }
+    //string
   //  let recipeAuthor = request.body.recipeAuthor; //string
     //let recipeTime = request.body.recipeTime; //minutes in integer values
    // let recipeDifficulty = request.body.recipeDifficulty; //integer from a scale of 1 to 3 : beginner, intermediate, expert
     let recipeImg = request.body.recipePhoto; //image
-   console.log(recipeName);
+   console.log(ingredientNames)
+   console.log(ingredientQuantities)
    response.render("index")
 });
 

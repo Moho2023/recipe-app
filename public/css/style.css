@@ -73,3 +73,14 @@ footer {
   font-size: 50%;
   text-align: center;
 }
+
+.divForm {
+  border-radius: 5px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  margin-right: 20px;
+  margin-left: 20px;
+  background-color: #66ffff;
+  overflow: auto;
+  padding: 15px;
+}

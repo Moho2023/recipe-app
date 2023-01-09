@@ -7,10 +7,15 @@
   <input type="text" id="name" name="recipeName" value=""><br>
   <label for="photo">Link to Photo:</label>
   <input type="text" id="photo" name="recipePhoto" value=""><br>
-  <br></br>
+  <br>
   <%for(let i = 1; i <21; i++){%>
+    <div class = divForm>
     <label for=<%="ingredient" + i.toString()%>><%="Ingredient " + i.toString()%></label>
-    <input type="text" id = <%="ingredient" + i.toString()%> name=<%="ingredient" + i.toString()%> value=""><br>
+    <input type="text" id = <%="ingredient" + i.toString()%> name=<%="ingredient" + i.toString()%> value="">
+    
+    <label for=<%="quantity" + i.toString()%>><%="Quantity " + i.toString()%> </label>
+    <input type="text" id = <%="quantity" + i.toString()%> name=<%="quantity" + i.toString()%> value="">
+  </div>
   <%}%>
   <br><br>
   <input type="submit" value="Create a new opponent!">
