@@ -147,6 +147,7 @@ app.post('/createComment', function(request, response) {
     fs.writeFileSync('data/comments.json', JSON.stringify(commentsJSON));
 
     response.status(200);
+    response.render("/recipe/"+recipe);
   }else{
     response.status(400);
     response.setHeader('Content-Type', 'text/html')
