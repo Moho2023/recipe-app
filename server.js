@@ -103,16 +103,16 @@ app.get('/scores', function(request, response) {
 });
 
 app.get('/recipe/:recipeName', function(request, response) {
-  let recipies = JSON.parse(fs.readFileSync('data/recipiess.json'));
+  let recipes = JSON.parse(fs.readFileSync('data/recipes.json'));
 
   // using dynamic routes to specify resource request information
   let recipeName = request.params.recipeName;
 
-  if(recipies[recipeName]){
+  if(recipes[recipeName]){
     response.status(200);
     response.setHeader('Content-Type', 'text/html')
     response.render("recipeDetails",{
-      recipe: recipies[recipeName]
+      recipe: recipes[recipeName]
     });
 
   }else{
@@ -131,10 +131,11 @@ app.get('/createRecipe', function(request, response) {
 });
 
 app.post('/createRecipe', function(request, response) {
-    let recipeName = request.body.recipeName;
-    console.log(recipeName)
-    let ingredientNames = []
-    let ingredientQuantities = []
+  let recipesJSON = JSON.parse(fs.readFileSync('data/recipes.json'));
+  let recipeName = request.body.recipeName
+    
+  let ingredientNames = []
+  let ingredientQuantities = []
     for(let i = 1; i < 21; i++){
       let a = "ingredient" + i.toString()
       ingredientNames.push(request.body[a])
@@ -142,13 +143,18 @@ app.post('/createRecipe', function(request, response) {
       let b = "quantity" + i.toString()
       ingredientQuantities.push(request.body[b])
     }
-    //string
-  //  let recipeAuthor = request.body.recipeAuthor; //string
-    //let recipeTime = request.body.recipeTime; //minutes in integer values
-   // let recipeDifficulty = request.body.recipeDifficulty; //integer from a scale of 1 to 3 : beginner, intermediate, expert
-    let recipeImg = request.body.recipePhoto; //image
-   console.log(ingredientNames)
-   console.log(ingredientQuantities)
+    
+    let newRecipe ={
+      recipeName: recipeName,
+      recipeAuthor: request.body.recipeAuthor,
+      recipeDifficulty: request.body.recipeDifficulty, //integer from a scale of 1 to 3 : beginner, intermediate, expert
+      recipeTime: request.body.recipeTime, //minutes, though idk if we're going to validate this
+      recipeImage: request.body.recipePhoto,
+      recipeIngredientNames: ingredientNames,
+      recipeIngredientQuantities: ingredientQuantities,
+    }
+    recipesJSON[recipeName] = newRecipe
+    fs.writeFileSync('data/recipes.json', JSON.stringify(recipesJSON));
    response.render("index")
 });
 

@@ -1,19 +1,31 @@
-<%- include('partials/header', {title:"Create Opponent"}) -%>
+<%- include('partials/header', {title:"Create Recipe"}) -%>
 
-<h2>Create a New Opponent!</h2>
+<h2>Create a New Recipe!</h2>
 
 <form action="/createRecipe" method="POST">
-  <label for="name">Name:</label>
-  <input type="text" id="name" name="recipeName" value=""><br>
-  <label for="photo">Link to Photo:</label>
-  <input type="text" id="photo" name="recipePhoto" value=""><br>
+  <label for="recipeAuthor">Your Name:</label>
+  <input type="text" id="recipeAuthor" name="recipeAuthor" value=""><br>
+  <label for="recipeName">Recipe Title:</label>
+  <input type="text" id="recipeName" name="recipeName" value=""><br>
+  <label for="recipePhoto">Link to Photo:</label>
+  <input type="text" id="recipePhoto" name="recipePhoto" value=""><br>
+
+  <label for="recipeDifficulty">Choose a difficulty:</label>
+  <select name="recipeDifficulty" id="recipeDifficulty">
+    <option value="Easy">Easy</option>
+    <option value="Medium">Medium</option>
+    <option value="Hard">Hard</option>
+  </select>
+
+  <label for="recipeTime">Preparation Time:</label>
+  <input type="text" id="recipeTime" name="recipeTime" value=""><br>
   <br>
   <%for(let i = 1; i <21; i++){%>
     <div class = divForm>
-    <label for=<%="ingredient" + i.toString()%>><%="Ingredient " + i.toString()%></label>
+    <label class = "ingredientLabel" for=<%="ingredient" + i.toString()%>><%="Ingredient " + i.toString()%></label>
     <input type="text" id = <%="ingredient" + i.toString()%> name=<%="ingredient" + i.toString()%> value="">
     
-    <label for=<%="quantity" + i.toString()%>><%="Quantity " + i.toString()%> </label>
+    <label class = "ingredientLabel" for=<%="quantity" + i.toString()%>><%="Quantity " + i.toString()%> </label>
     <input type="text" id = <%="quantity" + i.toString()%> name=<%="quantity" + i.toString()%> value="">
   </div>
   <%}%>
