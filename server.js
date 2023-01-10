@@ -133,7 +133,13 @@ app.get('/createRecipe', function(request, response) {
 app.post('/createRecipe', function(request, response) {
   let recipesJSON = JSON.parse(fs.readFileSync('data/recipes.json'));
   let recipeName = request.body.recipeName
-    
+  let recipePhoto = request.body.recipePhoto
+  let recipeAuthor = request.body.recipeAuthor
+  let recipeTime = request.body.recipeTime
+  let recipeDifficulty = request.body.recipeDifficulty
+
+  if(recipeName && recipePhoto && recipeAuthor && recipeDifficulty && recipeTime){
+
   let ingredientNames = []
   let ingredientQuantities = []
     for(let i = 1; i < 21; i++){
@@ -154,8 +160,19 @@ app.post('/createRecipe', function(request, response) {
       recipeIngredientQuantities: ingredientQuantities,
     }
     recipesJSON[recipeName] = newRecipe
+    console.log(recipesJSON)
     fs.writeFileSync('data/recipes.json', JSON.stringify(recipesJSON));
-   response.render("index")
+    response.status(200);
+    response.setHeader('Content-Type', 'text/html')
+    response.redirect("/recipe/"+recipeName);
+  }else{
+    response.status(400);
+    response.setHeader('Content-Type', 'text/html')
+    response.render("error", {
+      "errorCode":"400"
+    });
+  }
+    
 });
 
 // Because routes/middleware are applied in order,

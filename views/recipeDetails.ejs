@@ -1,8 +1,8 @@
-<%- include('partials/header', {title:"Opponent Details- P, R, S"}) -%>
+<%- include('partials/header', {title:"Recipe Details"}) -%>
 
-<h2>Opponent - <%=opponent.name%></h2>
+<h2>Recipe - <%=recipe.recipeName%></h2>
 
-<img src="<%=opponent.photo%>" height=150 />
+<img src="<%=recipe.recipePhoto%>" height=150 />
 
 <table>
   <tr>
@@ -10,39 +10,23 @@
       Name:
     </th>
     <td>
-      <%=opponent.name%>
+      <%=recipe.recipeName%>
     </td>
   </tr>
   <tr>
     <th>
-      Wins:
+      Author:
     </th>
     <td>
-      <%=opponent.win%>
+      <%=recipe.recipeAuthor%>
     </td>
   </tr>
   <tr>
     <th>
-      Losses:
+      Cook Time:
     </th>
     <td>
-      <%=opponent.lose%>
-    </td>
-  </tr>
-  <tr>
-    <th>
-      Ties:
-    </th>
-    <td>
-      <%=opponent.tie%>
-    </td>
-  </tr>
-  <tr>
-    <th>
-      Win %:
-    </th>
-    <td>
-      <%=opponent.win_percent%>
+      <%=recipe.recipeTime%>
     </td>
   </tr>
 </table>
