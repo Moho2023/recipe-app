@@ -22,14 +22,6 @@ app.get('/', function(request, response) {
   response.render("index");
 });
 
-app.get('/play', function(request, response) {
-    let opponents = JSON.parse(fs.readFileSync('data/opponents.json'));
-    response.status(200);
-    response.setHeader('Content-Type', 'text/html')
-    response.render("play", {
-      data: opponents
-    });
-});
 
 app.get('/results', function(request, response) {
     let opponents = JSON.parse(fs.readFileSync('data/opponents.json'));
@@ -104,7 +96,7 @@ app.get('/scores', function(request, response) {
 
 app.get('/recipe/:recipeName', function(request, response) {
   let recipes = JSON.parse(fs.readFileSync('data/recipes.json'));
-
+  let comments = JSON.parse(fs.readFileSync('data/comments.json'));
   // using dynamic routes to specify resource request information
   let recipeName = request.params.recipeName;
 
@@ -112,7 +104,8 @@ app.get('/recipe/:recipeName', function(request, response) {
     response.status(200);
     response.setHeader('Content-Type', 'text/html')
     response.render("recipeDetails",{
-      recipe: recipes[recipeName]
+      recipe: recipes[recipeName],
+      comments: comments
     });
 
   }else{
@@ -131,8 +124,8 @@ app.get('/createRecipe', function(request, response) {
 });
 
 app.post('/createComment', function(request, response) {
-  console.log(request.body)
   let commentsJSON = JSON.parse(fs.readFileSync('data/comments.json'));
+  let recipes = JSON.parse(fs.readFileSync('data/recipes.json'));
   let name = request.body.name
   let rating = request.body.rating
   let review = request.body.review
@@ -145,9 +138,12 @@ app.post('/createComment', function(request, response) {
     }
     commentsJSON[recipe][name] = newComment;
     fs.writeFileSync('data/comments.json', JSON.stringify(commentsJSON));
-
+    
     response.status(200);
-    response.render("/recipe/"+recipe);
+    response.render("recipeDetails",{
+      recipe: recipes[recipe],
+      comments: commentsJSON
+    });
   }else{
     response.status(400);
     response.setHeader('Content-Type', 'text/html')
@@ -187,7 +183,6 @@ app.post('/createRecipe', function(request, response) {
       recipeIngredientQuantities: ingredientQuantities,
     }
     recipesJSON[recipeName] = newRecipe
-    console.log(recipesJSON)
     fs.writeFileSync('data/recipes.json', JSON.stringify(recipesJSON));
     let commentsJSON = JSON.parse(fs.readFileSync('data/comments.json'));
     commentsJSON[recipeName] = {}

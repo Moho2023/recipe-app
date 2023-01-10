@@ -49,5 +49,18 @@
   <input type="submit" value="Submit Comment">
 </form>
 <br>
+<%for(comment in comments[recipe.recipeName]){%>
+  <%console.log(comments[recipe.recipeName][comment])%>
+  <table>
+    <tr>
+      <td><%=comments[recipe.recipeName][comment].name%></td>
+      <td><%=comments[recipe.recipeName][comment].rating%></td>
+    </tr>
+    <tr>
+      <td><%=comments[recipe.recipeName][comment].review%></td>
+    </tr>
+  </table>
+  <br>
+<%}%>
 
 <%- include('partials/footer') -%>
