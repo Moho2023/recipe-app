@@ -130,6 +130,32 @@ app.get('/createRecipe', function(request, response) {
     response.render("createRecipe")
 });
 
+app.post('/createComment', function(request, response) {
+  console.log(request.body)
+  let commentsJSON = JSON.parse(fs.readFileSync('data/comments.json'));
+  let name = request.body.name
+  let rating = request.body.rating
+  let review = request.body.review
+  let recipe = request.body.recipeName
+  if(name && rating && review){
+    let newComment = {
+      name: name,
+      rating: rating,
+      review: review,
+    }
+    commentsJSON[recipe][name] = newComment;
+    fs.writeFileSync('data/comments.json', JSON.stringify(commentsJSON));
+
+    response.status(200);
+  }else{
+    response.status(400);
+    response.setHeader('Content-Type', 'text/html')
+    response.render("error", {
+      "errorCode":"400"
+    });
+  }
+});
+
 app.post('/createRecipe', function(request, response) {
   let recipesJSON = JSON.parse(fs.readFileSync('data/recipes.json'));
   let recipeName = request.body.recipeName

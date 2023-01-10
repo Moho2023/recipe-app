@@ -30,10 +30,11 @@
     </td>
   </tr>
 </table>
-<form action="/createRecipe" method="POST">
+<form action="/createComment" method="POST">
   <label for="name">Your Name:</label>
   <input type="text" id="name" name="name" value="">
 
+  <label for="rating">Rating:</label>
   <select name="rating" id="rating">
     <option value="1">1</option>
     <option value="2">2</option>
@@ -41,24 +42,12 @@
     <option value="4">4</option>
     <option value="5">5</option>
   </select><br>
-  <label for="review">Your Review:</label>
-  <input type="text" id="review" name="review" value="">
+  <input type="hidden" id="recipeName" name="recipeName" value=<%=recipe.recipeName%>>
+  <label for="review">Your Review:</label><br>
+  <textarea name="review" id = "review" rows="3" cols="30">  </textarea><br>
 
   <input type="submit" value="Submit Comment">
 </form>
 <br>
-<%let comments = JSON.parse(fs.readFileSync('data/comments.json'))%>
-<%for(comment in comments){%>
-<table>
-  <tr>
-    <td><%=comment.name%></td>
-    <td><%=comment.rating%></td>
-  </tr>
-  <tr>
-    <td><=comment.review></td>
-  </tr>
-</table>
-<br>
-<%}%>
 
 <%- include('partials/footer') -%>
