@@ -162,6 +162,9 @@ app.post('/createRecipe', function(request, response) {
     recipesJSON[recipeName] = newRecipe
     console.log(recipesJSON)
     fs.writeFileSync('data/recipes.json', JSON.stringify(recipesJSON));
+    let commentsJSON = JSON.parse(fs.readFileSync('data/comments.json'));
+    commentsJSON[recipeName] = {}
+    fs.writeFileSync('data/comments.json', JSON.stringify(commentsJSON));
     response.status(200);
     response.setHeader('Content-Type', 'text/html')
     response.redirect("/recipe/"+recipeName);

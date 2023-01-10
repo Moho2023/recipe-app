@@ -30,5 +30,35 @@
     </td>
   </tr>
 </table>
+<form action="/createRecipe" method="POST">
+  <label for="name">Your Name:</label>
+  <input type="text" id="name" name="name" value="">
+
+  <select name="rating" id="rating">
+    <option value="1">1</option>
+    <option value="2">2</option>
+    <option value="3">3</option>
+    <option value="4">4</option>
+    <option value="5">5</option>
+  </select><br>
+  <label for="review">Your Review:</label>
+  <input type="text" id="review" name="review" value="">
+
+  <input type="submit" value="Submit Comment">
+</form>
+<br>
+<%let comments = JSON.parse(fs.readFileSync('data/comments.json'))%>
+<%for(comment in comments){%>
+<table>
+  <tr>
+    <td><%=comment.name%></td>
+    <td><%=comment.rating%></td>
+  </tr>
+  <tr>
+    <td><=comment.review></td>
+  </tr>
+</table>
+<br>
+<%}%>
 
 <%- include('partials/footer') -%>
