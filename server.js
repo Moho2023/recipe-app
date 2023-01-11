@@ -12,6 +12,7 @@ app.use(express.urlencoded());
 app.use(express.static('public')); //specify location of static assests
 app.set('views', __dirname + '/views'); //specify location of templates
 app.set('view engine', 'ejs'); //specify templating library
+let user;
 
 //.............Define server routes..............................//
 //Express checks routes in the order in which they are defined
@@ -152,6 +153,23 @@ app.post('/createComment', function(request, response) {
     });
   }
 });
+
+app.get("login", function(request, response){
+  username = request.params.username
+  let password = request.params.password;
+  let users = JSON.parse(fs.readFileSync('data/users.json'));
+
+  if(users[username] = password){
+    user = username
+    response.status(200);
+    response.setHeader('Content-Type', 'text/html')
+    response.redirect("recipes");
+  }else{
+    response.status(400);
+    response.setHeader('Content-Type', 'text/html')
+    response.render("index");
+  }
+})
 
 app.post('/createRecipe', function(request, response) {
   let recipesJSON = JSON.parse(fs.readFileSync('data/recipes.json'));
