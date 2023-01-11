@@ -204,8 +204,13 @@ app.get('/recipes', function(request, response) {
   response.status(200);
   response.setHeader('Content-Type', 'text/html')
   let recipesJSON = JSON.parse(fs.readFileSync('data/recipes.json'));
+  let arrayOfRecipes = []
+  for(let recipe in recipesJSON){
+    arrayOfRecipes.push(recipe);
+  }
   response.render("recipes", {
-    recipesJSON: recipesJSON
+    recipesJSON: recipesJSON,
+    arrayOfRecipes: arrayOfRecipes
   })
 });
 
