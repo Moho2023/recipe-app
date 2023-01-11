@@ -200,6 +200,15 @@ app.post('/createRecipe', function(request, response) {
     
 });
 
+app.get('/recipes', function(request, response) {
+  response.status(200);
+  response.setHeader('Content-Type', 'text/html')
+  let recipesJSON = JSON.parse(fs.readFileSync('data/recipes.json'));
+  response.render("recipes", {
+    recipesJSON: recipesJSON
+  })
+});
+
 // Because routes/middleware are applied in order,
 // this will act as a default error route in case of
 // a request fot an invalid route
@@ -216,6 +225,8 @@ const port = process.env.PORT || 3000;
 app.listen(port, function() {
   console.log('Server started at http://localhost:'+port+'.')
 });
+
+
 
 /**
  app.get('/yabbadabbadoo')
