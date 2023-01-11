@@ -12,6 +12,7 @@ app.use(express.urlencoded());
 app.use(express.static('public')); //specify location of static assests
 app.set('views', __dirname + '/views'); //specify location of templates
 app.set('view engine', 'ejs'); //specify templating library
+let user;
 
 //.............Define server routes..............................//
 //Express checks routes in the order in which they are defined
@@ -126,7 +127,12 @@ app.get('/createRecipe', function(request, response) {
 app.post('/createComment', function(request, response) {
   let commentsJSON = JSON.parse(fs.readFileSync('data/comments.json'));
   let recipes = JSON.parse(fs.readFileSync('data/recipes.json'));
-  let name = request.body.name
+  let name;
+  if(user != ""){
+    name = user
+  }else{
+    name = request.body.name
+  }
   let rating = request.body.rating
   let review = request.body.review
   let recipe = request.body.recipeName
@@ -153,9 +159,35 @@ app.post('/createComment', function(request, response) {
   }
 });
 
+app.get("/login", function(request, response){
+  let username = request.query.username
+  let password = request.query.password;
+  let users = JSON.parse(fs.readFileSync('data/users.json'));
+  console.log(users)
+
+  if(users[username] = password){
+    user = username
+    console.log("user variable = ")
+    console.log(user)
+    response.status(200);
+    response.setHeader('Content-Type', 'text/html')
+    response.redirect("recipes");
+  }else{
+    console.log("fail")
+    response.status(400);
+    response.setHeader('Content-Type', 'text/html')
+    response.render("index");
+  }
+})
+
 app.post('/createRecipe', function(request, response) {
   let recipesJSON = JSON.parse(fs.readFileSync('data/recipes.json'));
   let recipeName = request.body.recipeName
+  if(user != ""){
+    recipeName = user
+  }else{
+    recipeName = request.body.name
+  }
   let recipePhoto = request.body.recipePhoto
   let recipeAuthor = request.body.recipeAuthor
   let recipeTime = request.body.recipeTime
