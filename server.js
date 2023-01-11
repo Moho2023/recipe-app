@@ -163,12 +163,9 @@ app.get("/login", function(request, response){
   let username = request.query.username
   let password = request.query.password;
   let users = JSON.parse(fs.readFileSync('data/users.json'));
-  console.log(users)
 
   if(users[username] = password){
     user = username
-    console.log("user variable = ")
-    console.log(user)
     response.status(200);
     response.setHeader('Content-Type', 'text/html')
     response.redirect("recipes");
@@ -182,14 +179,14 @@ app.get("/login", function(request, response){
 
 app.post('/createRecipe', function(request, response) {
   let recipesJSON = JSON.parse(fs.readFileSync('data/recipes.json'));
-  let recipeName = request.body.recipeName
+  let author = request.body.recipeName
   if(user != ""){
-    recipeName = user
+    recipeAuthor = user
   }else{
-    recipeName = request.body.name
+    recipeAuthor = request.body.recipeAuthor
   }
   let recipePhoto = request.body.recipePhoto
-  let recipeAuthor = request.body.recipeAuthor
+  let recipeName = request.body.recipeName
   let recipeTime = request.body.recipeTime
   let recipeDifficulty = request.body.recipeDifficulty
 
@@ -207,7 +204,7 @@ app.post('/createRecipe', function(request, response) {
     
     let newRecipe ={
       recipeName: recipeName,
-      recipeAuthor: request.body.recipeAuthor,
+      recipeAuthor: recipeAuthor,
       recipeDifficulty: request.body.recipeDifficulty, //integer from a scale of 1 to 3 : beginner, intermediate, expert
       recipeTime: request.body.recipeTime, //minutes, though idk if we're going to validate this
       recipeImage: request.body.recipePhoto,
