@@ -5,6 +5,15 @@ body {
   font-family: 'Raleway', sans-serif;
 }
 
+p {
+  color: #000080;
+  text-indent: 30px;
+}
+
+h2, h3 {
+  text-indent: 20px;
+}
+
 h1 {
   background-color: #00cccc;
   font-size: 40px;

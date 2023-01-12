@@ -11,6 +11,7 @@
     </th>
     <td>
       <%=recipe.recipeName%>
+      <%console.log(recipe)%>
     </td>
   </tr>
   <tr>
@@ -30,6 +31,21 @@
     </td>
   </tr>
 </table>
+<br>
+<h3>Ingredients</h3><br>
+<%for(let i in recipe.recipeIngredientNames){%>
+  <%if(recipe.recipeIngredientNames[i].toString() != "" && recipe.recipeIngredientQuantities[i].toString() != ""){%>
+  <p><%=recipe.recipeIngredientNames[i].toString() + " – " + recipe.recipeIngredientQuantities[i].toString()%></p>
+  <%}%>
+<%}%>
+<br>
+<h3>Steps</h3><br>
+<%let recipeStepsSplit = recipe.recipeSteps.split('\r\n');%>
+<%for(let i of recipeStepsSplit){%>
+  <p><%=i.toString()%></p>
+<%}%>
+<br>
+<h3>Comments</h3>
 <form action="/createComment" method="POST">
   <label for="name">Your Name:</label>
   <input type="text" id="name" name="name" value="">

@@ -210,6 +210,7 @@ app.post('/createRecipe', function(request, response) {
       recipeImage: request.body.recipePhoto,
       recipeIngredientNames: ingredientNames,
       recipeIngredientQuantities: ingredientQuantities,
+      recipeSteps: request.body.steps
     }
     recipesJSON[recipeName] = newRecipe
     fs.writeFileSync('data/recipes.json', JSON.stringify(recipesJSON));
