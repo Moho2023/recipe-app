@@ -1,7 +1,7 @@
 <%- include('partials/header', {title:"Create Recipe"}) -%>
 
 <h2>Create a New Recipe!</h2>
-
+<center>
 <form action="/createRecipe" method="POST">
   <label for="recipeAuthor">Your Name:</label>
   <input type="text" id="recipeAuthor" name="recipeAuthor" value=""><br>
@@ -12,9 +12,9 @@
 
   <label for="recipeDifficulty">Choose a difficulty:</label>
   <select name="recipeDifficulty" id="recipeDifficulty">
-    <option value="Easy">Easy</option>
-    <option value="Medium">Medium</option>
-    <option value="Hard">Hard</option>
+    <option value="Easy">Beginner</option>
+    <option value="Medium">Intermediate</option>
+    <option value="Hard">Gordon Ramsay</option>
   </select>
 
   <label for="recipeTime">Preparation Time:</label>
@@ -35,5 +35,6 @@
   <br><br>
   <input type="submit" value="Submit Recipe">
 </form>
+</center>
 
 <%- include('partials/footer') -%>

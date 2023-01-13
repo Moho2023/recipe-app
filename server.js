@@ -12,8 +12,9 @@ app.use(express.urlencoded());
 app.use(express.static('public')); //specify location of static assests
 app.set('views', __dirname + '/views'); //specify location of templates
 app.set('view engine', 'ejs'); //specify templating library
-let user;
-
+let user="";
+let recipeIdArray = [];
+let tempRecipeID = 1;
 //.............Define server routes..............................//
 //Express checks routes in the order in which they are defined
 
@@ -95,11 +96,17 @@ app.get('/scores', function(request, response) {
   });
 });
 
-app.get('/recipe/:recipeName', function(request, response) {
+app.get('/recipe/:recipeID', function(request, response) {
   let recipes = JSON.parse(fs.readFileSync('data/recipes.json'));
   let comments = JSON.parse(fs.readFileSync('data/comments.json'));
   // using dynamic routes to specify resource request information
-  let recipeName = request.params.recipeName;
+  let recipeID = request.params.recipeID;
+  let recipeName;
+  for(recipe in recipes){
+    if(recipes[recipe].recipeID && recipes[recipe].recipeID == recipeID){
+      recipeName = recipes[recipe].recipeName;
+    }
+  }
 
   if(recipes[recipeName]){
     response.status(200);
@@ -130,8 +137,10 @@ app.post('/createComment', function(request, response) {
   let name;
   if(user != ""){
     name = user
-  }else{
+  }else if(request.body.name == undefined){
     name = request.body.name
+  }else{
+    name = ""
   }
   let rating = request.body.rating
   let review = request.body.review
@@ -142,7 +151,7 @@ app.post('/createComment', function(request, response) {
       rating: rating,
       review: review,
     }
-    commentsJSON[recipe][name] = newComment;
+    commentsJSON[recipe].name = newComment;
     fs.writeFileSync('data/comments.json', JSON.stringify(commentsJSON));
     
     response.status(200);
@@ -179,7 +188,6 @@ app.get("/login", function(request, response){
 
 app.post('/createRecipe', function(request, response) {
   let recipesJSON = JSON.parse(fs.readFileSync('data/recipes.json'));
-  let author = request.body.recipeName
   if(user != ""){
     recipeAuthor = user
   }else{
@@ -189,8 +197,10 @@ app.post('/createRecipe', function(request, response) {
   let recipeName = request.body.recipeName
   let recipeTime = request.body.recipeTime
   let recipeDifficulty = request.body.recipeDifficulty
+  let recipeID = tempRecipeID;
+  tempRecipeID += 1;
 
-  if(recipeName && recipePhoto && recipeAuthor && recipeDifficulty && recipeTime){
+  if(recipeName && recipeAuthor){
 
   let ingredientNames = []
   let ingredientQuantities = []
@@ -210,7 +220,8 @@ app.post('/createRecipe', function(request, response) {
       recipeImage: request.body.recipePhoto,
       recipeIngredientNames: ingredientNames,
       recipeIngredientQuantities: ingredientQuantities,
-      recipeSteps: request.body.steps
+      recipeSteps: request.body.steps,
+      recipeID: recipeID
     }
     recipesJSON[recipeName] = newRecipe
     fs.writeFileSync('data/recipes.json', JSON.stringify(recipesJSON));
@@ -219,7 +230,7 @@ app.post('/createRecipe', function(request, response) {
     fs.writeFileSync('data/comments.json', JSON.stringify(commentsJSON));
     response.status(200);
     response.setHeader('Content-Type', 'text/html')
-    response.redirect("/recipe/"+recipeName);
+    response.redirect("/recipe/"+recipeID);
   }else{
     response.status(400);
     response.setHeader('Content-Type', 'text/html')
@@ -231,17 +242,33 @@ app.post('/createRecipe', function(request, response) {
 });
 
 app.get('/recipes', function(request, response) {
-  response.status(200);
-  response.setHeader('Content-Type', 'text/html')
+  
   let recipesJSON = JSON.parse(fs.readFileSync('data/recipes.json'));
-  let arrayOfRecipes = []
-  for(let recipe in recipesJSON){
-    arrayOfRecipes.push(recipe);
+  let arrayOfRecipeNames = [];
+  let arrayOfRecipeAuthors = [];
+  let arrayOfRecipeImages = [];
+  let arrayOfDifficulty = [];
+  let arrayOfTime = [];
+  let arrayOfIds = []
+  for(recipe in recipesJSON){
+    arrayOfRecipeNames.push(recipesJSON[recipe].recipeName);
+    arrayOfRecipeAuthors.push(recipesJSON[recipe].recipeAuthor);
+    arrayOfRecipeImages.push(recipesJSON[recipe].recipeImage);
+    arrayOfDifficulty.push(recipesJSON[recipe].recipeDifficulty);
+    arrayOfTime.push(recipesJSON[recipe].recipeTime);
+    arrayOfIds.push(recipesJSON[recipe].recipeID);
   }
+  response.status(200);
+  response.setHeader('Content-Type', 'text/html');
   response.render("recipes", {
-    recipesJSON: recipesJSON,
-    arrayOfRecipes: arrayOfRecipes
+    recipenames: arrayOfRecipeNames,
+    recipeauthors: arrayOfRecipeAuthors,
+    recipeimages: arrayOfRecipeImages,
+    recipetimes: arrayOfTime,
+    recipelevels: arrayOfDifficulty,
+    recipeids: arrayOfIds
   })
+  console.log(arrayOfRecipeNames)
 });
 
 // Because routes/middleware are applied in order,

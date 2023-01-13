@@ -1,25 +1,27 @@
 <%- include('partials/header', {title:"Recipes"}) -%>
 
-<h1> Emptied Plates </h1>
+<center><h3> Emptiable Plates </h3></center>
 
-    <% for(let recipe in recipesJSON){ %>
-        <div class="card mb-3 w-75">
-            <div class="row g-0">
-              <div class="col-md-4">
-                <img src="" class="img-fluid rounded-start" alt="...">
-              </div>
-              <div class="col-md-8">
-                <div class="card-body">
-                  <h5 class="card-title"><%recipesJSON[recipe]%></h5>
-                  <p class="card-text"><%=recipesJSON[recipe]%></p>
-                  <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-                </div>
-              </div>
+    <% for(let i=0; i < recipenames.length; i++){ %>
+      <div class="card mb-3 mx-auto" style="max-width: 720px;">
+        <div class="row g-0">
+          <div class="col-md-4">
+            <img src=<%=recipeimages[i]%> class="img-fluid rounded-start foodimage" alt="...">
+          </div>
+          <div class="col-md-8">
+            <div class="card-body">
+              <h2 class="card-title"><%=recipenames[i]%></h2>
+              <p class="card-text">Recipe posted by <b><%=recipeauthors[i]%></b></p>
+              <p class="card-text">Skill level: <b><%=recipelevels[i]%></b></p>
+              <p class="card-text"><small class="text-muted">Allergens:</small></p>
+              <a href="/recipe/<%=recipeids[i]%>">Recipe Details</a>
+
+
             </div>
           </div>
+        </div>
+      </div>
     <%}%>
 
-
-<h1>TESTING</h1>
 
   <%- include('partials/footer') -%>
