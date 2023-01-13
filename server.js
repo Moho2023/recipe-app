@@ -16,7 +16,7 @@ app.set('views', __dirname + '/views'); //specify location of templates
 app.set('view engine', 'ejs'); //specify templating library
 let user;
 let recipeIdArray = [];
-let recipesArray = JSON.parse(fs.readFileSync('data/opponents.json'));
+let recipesArray = JSON.parse(fs.readFileSync('data/recipes.json'));
 for(recipe in recipesArray){
   recipeIdArray.push(recipesArray[recipe][recipeID])
 }
