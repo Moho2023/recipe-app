@@ -172,6 +172,7 @@ app.post('/createComment', function(request, response) {
   }else{
     response.status(400);
     response.setHeader('Content-Type', 'text/html')
+<<<<<<< HEAD
     response.render("index");
 =======
 >>>>>>> 2491909531598df0041ddb82f03831b47b9e4dd2
