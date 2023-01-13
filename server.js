@@ -14,7 +14,10 @@ app.set('views', __dirname + '/views'); //specify location of templates
 app.set('view engine', 'ejs'); //specify templating library
 let user="";
 let recipeIdArray = [];
-let tempRecipeID = 1;
+let recipesArray = JSON.parse(fs.readFileSync('data/opponents.json'));
+for(recipe in recipesArray){
+  recipeIdArray.push(recipesArray[recipe][recipeID])
+}
 //.............Define server routes..............................//
 //Express checks routes in the order in which they are defined
 
@@ -137,10 +140,8 @@ app.post('/createComment', function(request, response) {
   let name;
   if(user != ""){
     name = user
-  }else if(request.body.name == undefined){
-    name = request.body.name
   }else{
-    name = ""
+    name = request.body.name
   }
   let rating = request.body.rating
   let review = request.body.review
@@ -160,10 +161,10 @@ app.post('/createComment', function(request, response) {
       comments: commentsJSON
     });
   }else{
-    response.status(400);
+    response.status(404);
     response.setHeader('Content-Type', 'text/html')
     response.render("error", {
-      "errorCode":"400"
+      "errorCode":"404"
     });
   }
 });
@@ -180,7 +181,7 @@ app.get("/login", function(request, response){
     response.redirect("recipes");
   }else{
     console.log("fail")
-    response.status(400);
+    response.status(404);
     response.setHeader('Content-Type', 'text/html')
     response.render("index");
   }
@@ -232,10 +233,10 @@ app.post('/createRecipe', function(request, response) {
     response.setHeader('Content-Type', 'text/html')
     response.redirect("/recipe/"+recipeID);
   }else{
-    response.status(400);
+    response.status(404);
     response.setHeader('Content-Type', 'text/html')
     response.render("error", {
-      "errorCode":"400"
+      "errorCode":"404"
     });
   }
     
