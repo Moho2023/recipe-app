@@ -16,7 +16,6 @@ app.set('views', __dirname + '/views'); //specify location of templates
 app.set('view engine', 'ejs'); //specify templating library
 let user;
 let recipeIdArray = [];
-let tempRecipeID = 1;
 let recipesArray = JSON.parse(fs.readFileSync('data/opponents.json'));
 for(recipe in recipesArray){
   recipeIdArray.push(recipesArray[recipe][recipeID])
@@ -149,7 +148,6 @@ app.post('/createComment', function(request, response) {
 =======
 >>>>>>> 2491909531598df0041ddb82f03831b47b9e4dd2
   }else{
-    name = ""
     name = request.body.name
   }
   let rating = request.body.rating
@@ -170,11 +168,14 @@ app.post('/createComment', function(request, response) {
       comments: commentsJSON
     });
   }else{
-    response.status(400);
+    response.status(404);
     response.setHeader('Content-Type', 'text/html')
 <<<<<<< HEAD
     response.render("index");
 =======
+    response.render("error", {
+      "errorCode":"404"
+    });
 >>>>>>> 2491909531598df0041ddb82f03831b47b9e4dd2
   }
 });
@@ -191,7 +192,7 @@ app.get("/login", function(request, response){
     response.redirect("recipes");
   }else{
     console.log("fail")
-    response.status(400);
+    response.status(404);
     response.setHeader('Content-Type', 'text/html')
     response.render("index");
   }
@@ -251,10 +252,10 @@ app.post('/createRecipe', function(request, response) {
     response.setHeader('Content-Type', 'text/html')
     response.redirect("/recipe/"+recipeID);
   }else{
-    response.status(400);
+    response.status(404);
     response.setHeader('Content-Type', 'text/html')
     response.render("error", {
-      "errorCode":"400"
+      "errorCode":"404"
     });
   }
     
