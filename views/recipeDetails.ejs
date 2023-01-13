@@ -2,7 +2,7 @@
 
 <h2>Recipe - <%=recipe.recipeName%></h2>
 
-<img src="<%=recipe.recipePhoto%>" height=150 />
+<img src="<%=recipe.recipeImage%>" height=150>
 
 <table>
   <tr>
@@ -43,9 +43,11 @@
 <br>
 <h3>Steps</h3><br>
 <%let recipeStepsSplit = recipe.recipeSteps.split('\r\n');%>
+<ol>
 <%for(let i of recipeStepsSplit){%>
-  <p><%=i.toString()%></p>
+  <li><%=i.toString()%></li>
 <%}%>
+</ol>
 <br>
 <h3>Comments</h3>
 <form action="/createComment" method="POST">
