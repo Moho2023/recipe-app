@@ -17,6 +17,10 @@ app.set('view engine', 'ejs'); //specify templating library
 let user;
 let recipeIdArray = [];
 let tempRecipeID = 1;
+let recipesArray = JSON.parse(fs.readFileSync('data/opponents.json'));
+for(recipe in recipesArray){
+  recipeIdArray.push(recipesArray[recipe][recipeID])
+}
 //.............Define server routes..............................//
 //Express checks routes in the order in which they are defined
 
@@ -139,10 +143,14 @@ app.post('/createComment', function(request, response) {
   let name;
   if(user){
     name = user
+<<<<<<< HEAD
   }else if(request.body.name){
     name = request.body.name
+=======
+>>>>>>> 2491909531598df0041ddb82f03831b47b9e4dd2
   }else{
     name = ""
+    name = request.body.name
   }
   let rating = request.body.rating
   let review = request.body.review
@@ -165,6 +173,8 @@ app.post('/createComment', function(request, response) {
     response.status(400);
     response.setHeader('Content-Type', 'text/html')
     response.render("index");
+=======
+>>>>>>> 2491909531598df0041ddb82f03831b47b9e4dd2
   }
 });
 
