@@ -1,8 +1,13 @@
 <%- include('partials/header', {title:"Recipe Details"}) -%>
 
+<div class="recipedetailspage">
 <h2>Recipe - <%=recipe.recipeName%></h2>
 
+<<<<<<< Updated upstream
 <img src="<%=recipe.recipeImage%>" height=150>
+=======
+<img src="<%=recipe.recipeImage%>" class="detailsphoto"/>
+>>>>>>> Stashed changes
 
 <table>
   <tr>
@@ -42,6 +47,7 @@
 <%}%>
 <br>
 <h3>Steps</h3><br>
+<ol>
 <%let recipeStepsSplit = recipe.recipeSteps.split('\r\n');%>
 <ol>
 <%for(let i of recipeStepsSplit){%>
@@ -68,18 +74,21 @@
 
   <input type="submit" value="Submit Comment">
 </form>
+</div>
 <br>
 <%for(comment in comments[recipe.recipeName]){%>
   <%console.log(comments[recipe.recipeName][comment])%>
+  <center>
   <table>
     <tr>
-      <td><%=comments[recipe.recipeName][comment].name%></td>
+      <td><b><%=comments[recipe.recipeName][comment].name%></b></td>
       <td><%=comments[recipe.recipeName][comment].rating%></td>
     </tr>
     <tr>
       <td colspan="2"><%=comments[recipe.recipeName][comment].review%></td>
     </tr>
   </table>
+  </center>
   <br>
 <%}%>
 

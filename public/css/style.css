@@ -17,4 +17,14 @@ input[type=submit] {
 .footerLogo {
   height: 50px;
   width: 70px;
+=======
+
+.detailsphoto {
+  width: 500px;
+  height: 500px;
+}
+
+.recipedetailspage {
+  margin-left: 100px;
+>>>>>>> Stashed changes
 }

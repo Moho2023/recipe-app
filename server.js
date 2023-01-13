@@ -6,13 +6,15 @@ const ejs = require('ejs');
 //..............Create an Express server object..................//
 const app = express();
 
+
+
 //..............Apply Express middleware to the server object....//
 app.use(express.json()); //Used to parse JSON bodies (needed for POST requests)
 app.use(express.urlencoded());
 app.use(express.static('public')); //specify location of static assests
 app.set('views', __dirname + '/views'); //specify location of templates
 app.set('view engine', 'ejs'); //specify templating library
-let user="";
+let user;
 let recipeIdArray = [];
 let tempRecipeID = 1;
 //.............Define server routes..............................//
@@ -135,9 +137,9 @@ app.post('/createComment', function(request, response) {
   let commentsJSON = JSON.parse(fs.readFileSync('data/comments.json'));
   let recipes = JSON.parse(fs.readFileSync('data/recipes.json'));
   let name;
-  if(user != ""){
+  if(user){
     name = user
-  }else if(request.body.name == undefined){
+  }else if(request.body.name){
     name = request.body.name
   }else{
     name = ""
@@ -162,9 +164,7 @@ app.post('/createComment', function(request, response) {
   }else{
     response.status(400);
     response.setHeader('Content-Type', 'text/html')
-    response.render("error", {
-      "errorCode":"400"
-    });
+    response.render("index");
   }
 });
 
@@ -197,8 +197,16 @@ app.post('/createRecipe', function(request, response) {
   let recipeName = request.body.recipeName
   let recipeTime = request.body.recipeTime
   let recipeDifficulty = request.body.recipeDifficulty
-  let recipeID = tempRecipeID;
-  tempRecipeID += 1;
+  let recipeID;
+
+  tempRecipeID = Math.floor(Math.random() * 100000);
+  if(recipeIdArray.includes(tempRecipeID)){
+    tempRecipeID = Math.floor(Math.random() * 100000);
+  }
+
+  recipeIdArray.push(tempRecipeID);
+  recipeID = tempRecipeID;
+  
 
   if(recipeName && recipeAuthor){
 
