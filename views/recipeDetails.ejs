@@ -34,9 +34,11 @@
 <br>
 <h3>Ingredients</h3><br>
 <%for(let i in recipe.recipeIngredientNames){%>
+  <ul>
   <%if(recipe.recipeIngredientNames[i].toString() != "" && recipe.recipeIngredientQuantities[i].toString() != ""){%>
-  <p><%=recipe.recipeIngredientNames[i].toString() + " – " + recipe.recipeIngredientQuantities[i].toString()%></p>
+  <li><%=recipe.recipeIngredientNames[i].toString() + " – " + recipe.recipeIngredientQuantities[i].toString()%></li>
   <%}%>
+  </ul>
 <%}%>
 <br>
 <h3>Steps</h3><br>
