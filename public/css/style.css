@@ -14,11 +14,11 @@ input[type=submit] {
   font-size: 16px;
   margin-bottom: 20px;
 }
-<<<<<<< Updated upstream
+
 .footerLogo {
   height: 50px;
   width: 70px;
-=======
+}
 
 .detailsphoto {
   width: 500px;
@@ -27,5 +27,4 @@ input[type=submit] {
 
 .recipedetailspage {
   margin-left: 100px;
->>>>>>> Stashed changes
 }

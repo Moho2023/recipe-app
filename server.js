@@ -142,11 +142,8 @@ app.post('/createComment', function(request, response) {
   let name;
   if(user){
     name = user
-<<<<<<< HEAD
   }else if(request.body.name){
     name = request.body.name
-=======
->>>>>>> 2491909531598df0041ddb82f03831b47b9e4dd2
   }else{
     name = request.body.name
   }
@@ -170,13 +167,9 @@ app.post('/createComment', function(request, response) {
   }else{
     response.status(404);
     response.setHeader('Content-Type', 'text/html')
-<<<<<<< HEAD
-    response.render("index");
-=======
     response.render("error", {
       "errorCode":"404"
     });
->>>>>>> 2491909531598df0041ddb82f03831b47b9e4dd2
   }
 });
 
