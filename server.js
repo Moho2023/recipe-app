@@ -17,7 +17,6 @@ app.set('view engine', 'ejs'); //specify templating library
 let user = "";
 let recipeIdArray = [];
 let recipesArray = JSON.parse(fs.readFileSync('data/recipes.json'));
-console.log(recipesArray)
 for(recipe in recipesArray){
   recipeIdArray.push(recipesArray[recipe].recipeID)
 }
@@ -140,7 +139,6 @@ app.get('/createRecipe', function(request, response) {
 app.post('/createComment', function(request, response) {
   let commentsJSON = JSON.parse(fs.readFileSync('data/comments.json'));
   let recipes = JSON.parse(fs.readFileSync('data/recipes.json'));
-  console.log(request.body)
   let name = "";
   if(user){
     name = user
@@ -186,7 +184,6 @@ app.get("/login", function(request, response){
     response.setHeader('Content-Type', 'text/html')
     response.redirect("recipes");
   }else{
-    console.log("fail")
     response.status(404);
     response.setHeader('Content-Type', 'text/html')
     response.render("index");
@@ -215,8 +212,6 @@ app.post('/createRecipe', function(request, response) {
   recipeIdArray.push(tempRecipeID);
   recipeID = tempRecipeID;
   
-console.log(recipeName)
-console.log(recipeAuthor)
   if(recipeName && recipeAuthor){
 
   let ingredientNames = []
@@ -241,8 +236,6 @@ console.log(recipeAuthor)
       recipeID: recipeID
     }
 
-    console.log(newRecipe)
-    console.log("recipe Should Be above this")
     recipesJSON[recipeID] = newRecipe
     fs.writeFileSync('data/recipes.json', JSON.stringify(recipesJSON));
     let commentsJSON = JSON.parse(fs.readFileSync('data/comments.json'));
@@ -252,7 +245,6 @@ console.log(recipeAuthor)
     response.setHeader('Content-Type', 'text/html')
     response.redirect("/recipe/"+recipeID);
   }else{
-    console.log("smth abt the if statement")
     response.status(404);
     response.setHeader('Content-Type', 'text/html')
     response.render("error", {
