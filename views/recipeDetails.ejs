@@ -1,6 +1,6 @@
 <%- include('partials/header', {title:"Recipe Details"}) -%>
 
-<div class="text-center">
+<div>
 <h2>Recipe - <%=recipe.recipeName%></h2>
 
 <img src="<%=recipe.recipeImage%>" height=150>
@@ -34,32 +34,27 @@
 </table>
 <br>
 <h3>Ingredients</h3><br>
+</div>
 
-<center>
-  <ul class = "recipeDetails">
+
+  <ul>
 <%for(let i in recipe.recipeIngredientNames){%>
  
   <%if(recipe.recipeIngredientNames[i].toString() != "" && recipe.recipeIngredientQuantities[i].toString() != ""){%>
-    <div class = "container mx-auto">
   <li><%=recipe.recipeIngredientNames[i].toString() + " – " + recipe.recipeIngredientQuantities[i].toString()%></li>
-  <br>
-</div>  
+  <br> 
 
   <%}}%>
-  
 
 </ul>
-</center>
 <br>
 <h3>Steps</h3><br>
 <%let recipeStepsSplit = recipe.recipeSteps.split('\r\n');%>
-<div class = "container">
-<ol class = "recipeDetails">
+<ol>
 <%for(let i of recipeStepsSplit){%>
   <li><%=i.toString()%></li>
 <%}%>
 </ol>
-</div>
 <br>
 <h3>Comments</h3>
 <form action="/createComment" method="POST">
@@ -74,27 +69,24 @@
     <option value="4">4</option>
     <option value="5">5</option>
   </select><br>
-  <input type="hidden" id="recipeName" name="recipeName" value=<%=recipe.recipeName%>>
+  <input type="hidden" id="recipeID" name="recipeID" value=<%=recipe.recipeID%>>
   <label for="review">Your Review:</label><br>
   <textarea name="review" id = "review" rows="3" cols="30"></textarea><br>
 
   <input type="submit" value="Submit Comment">
 </form>
-</div>
 <br>
-<%for(comment in comments[recipe.recipeName]){%>
-  <%console.log(comments[recipe.recipeName][comment])%>
-  <center>
+<%for(comment in comments[recipe.recipeID]){%>
+  <%console.log(comments[recipe.recipeID][comment])%>
   <table>
     <tr>
-      <td><b><%=comments[recipe.recipeName][comment].name%></b></td>
-      <td><%=comments[recipe.recipeName][comment].rating%></td>
+      <td><b><%=comments[recipe.recipeID][comment].name%></b></td>
+      <td><%=comments[recipe.recipeID][comment].rating%></td>
     </tr>
     <tr>
-      <td colspan="2"><%=comments[recipe.recipeName][comment].review%></td>
+      <td colspan="2"><%=comments[recipe.recipeID][comment].review%></td>
     </tr>
   </table>
-  </center>
   <br>
 <%}%>
 

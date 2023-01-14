@@ -14,7 +14,7 @@ app.use(express.urlencoded());
 app.use(express.static('public')); //specify location of static assests
 app.set('views', __dirname + '/views'); //specify location of templates
 app.set('view engine', 'ejs'); //specify templating library
-let user;
+let user = "";
 let recipeIdArray = [];
 let recipesArray = JSON.parse(fs.readFileSync('data/recipes.json'));
 console.log(recipesArray)
@@ -109,16 +109,16 @@ app.get('/recipe/:recipeID', function(request, response) {
   let recipeID = request.params.recipeID;
   let recipeName;
   for(recipe in recipes){
-    if(recipes[recipe].recipeID && recipes[recipe].recipeID == recipeID){
-      recipeName = recipes[recipe].recipeName;
+    if(recipes[recipeID]){
+      recipeName = recipes[recipeID].recipeName;
     }
   }
 
-  if(recipes[recipeName]){
+  if(recipes[recipeID]){
     response.status(200);
     response.setHeader('Content-Type', 'text/html')
     response.render("recipeDetails",{
-      recipe: recipes[recipeName],
+      recipe: recipes[recipeID],
       comments: comments
     });
 
@@ -140,24 +140,25 @@ app.get('/createRecipe', function(request, response) {
 app.post('/createComment', function(request, response) {
   let commentsJSON = JSON.parse(fs.readFileSync('data/comments.json'));
   let recipes = JSON.parse(fs.readFileSync('data/recipes.json'));
-  let name;
+  console.log(request.body)
+  let name = "";
   if(user){
     name = user
-  }else if(request.body.name){
+  }else if(typeof request.body.name == "string"){
     name = request.body.name
   }else{
-    name = request.body.name
+    name = "Anonymous Chef"
   }
   let rating = request.body.rating
   let review = request.body.review
-  let recipe = request.body.recipeName
+  let recipe = request.body.recipeID
   if(name && rating && review){
     let newComment = {
       name: name,
       rating: rating,
       review: review,
     }
-    commentsJSON[recipe].name = newComment;
+    commentsJSON[recipe][name] = newComment;
     fs.writeFileSync('data/comments.json', JSON.stringify(commentsJSON));
     
     response.status(200);
@@ -194,6 +195,7 @@ app.get("/login", function(request, response){
 
 app.post('/createRecipe', function(request, response) {
   let recipesJSON = JSON.parse(fs.readFileSync('data/recipes.json'));
+  let recipeAuthor = "Anonymous Chef"
   if(user != ""){
     recipeAuthor = user
   }else{
@@ -205,7 +207,7 @@ app.post('/createRecipe', function(request, response) {
   let recipeDifficulty = request.body.recipeDifficulty
   let recipeID;
 
-  tempRecipeID = Math.floor(Math.random() * 100000);
+  let tempRecipeID = Math.floor(Math.random() * 100000);
   if(recipeIdArray.includes(tempRecipeID)){
     tempRecipeID = Math.floor(Math.random() * 100000);
   }
@@ -213,7 +215,8 @@ app.post('/createRecipe', function(request, response) {
   recipeIdArray.push(tempRecipeID);
   recipeID = tempRecipeID;
   
-
+console.log(recipeName)
+console.log(recipeAuthor)
   if(recipeName && recipeAuthor){
 
   let ingredientNames = []
@@ -229,23 +232,27 @@ app.post('/createRecipe', function(request, response) {
     let newRecipe ={
       recipeName: recipeName,
       recipeAuthor: recipeAuthor,
-      recipeDifficulty: request.body.recipeDifficulty, //integer from a scale of 1 to 3 : beginner, intermediate, expert
-      recipeTime: request.body.recipeTime, //minutes, though idk if we're going to validate this
-      recipeImage: request.body.recipePhoto,
+      recipeDifficulty: recipeDifficulty, //integer from a scale of 1 to 3 : beginner, intermediate, expert
+      recipeTime: recipeTime, //minutes, though idk if we're going to validate this
+      recipeImage: recipePhoto,
       recipeIngredientNames: ingredientNames,
       recipeIngredientQuantities: ingredientQuantities,
       recipeSteps: request.body.steps,
       recipeID: recipeID
     }
-    recipesJSON[recipeName] = newRecipe
+
+    console.log(newRecipe)
+    console.log("recipe Should Be above this")
+    recipesJSON[recipeID] = newRecipe
     fs.writeFileSync('data/recipes.json', JSON.stringify(recipesJSON));
     let commentsJSON = JSON.parse(fs.readFileSync('data/comments.json'));
-    commentsJSON[recipeName] = {}
+    commentsJSON[recipeID] = {}
     fs.writeFileSync('data/comments.json', JSON.stringify(commentsJSON));
     response.status(200);
     response.setHeader('Content-Type', 'text/html')
     response.redirect("/recipe/"+recipeID);
   }else{
+    console.log("smth abt the if statement")
     response.status(404);
     response.setHeader('Content-Type', 'text/html')
     response.render("error", {
@@ -254,6 +261,8 @@ app.post('/createRecipe', function(request, response) {
   }
     
 });
+
+
 
 app.get('/recipes', function(request, response) {
   
@@ -282,7 +291,6 @@ app.get('/recipes', function(request, response) {
     recipelevels: arrayOfDifficulty,
     recipeids: arrayOfIds
   })
-  console.log(arrayOfRecipeNames)
 });
 
 // Because routes/middleware are applied in order,

@@ -28,8 +28,3 @@ input[type=submit] {
 div.container {
   text-align: center;
 }
-
-.recipeDetails{
-  display: block;
-  text-align: left;
-}
