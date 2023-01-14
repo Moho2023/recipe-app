@@ -17,8 +17,9 @@ app.set('view engine', 'ejs'); //specify templating library
 let user;
 let recipeIdArray = [];
 let recipesArray = JSON.parse(fs.readFileSync('data/recipes.json'));
+console.log(recipesArray)
 for(recipe in recipesArray){
-  recipeIdArray.push(recipesArray[recipe][recipeID])
+  recipeIdArray.push(recipesArray[recipe].recipeID)
 }
 //.............Define server routes..............................//
 //Express checks routes in the order in which they are defined

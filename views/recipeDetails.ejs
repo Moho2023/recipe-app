@@ -1,13 +1,9 @@
 <%- include('partials/header', {title:"Recipe Details"}) -%>
 
-<div class="recipedetailspage">
+<div class="text-center">
 <h2>Recipe - <%=recipe.recipeName%></h2>
 
-<<<<<<< Updated upstream
 <img src="<%=recipe.recipeImage%>" height=150>
-=======
-<img src="<%=recipe.recipeImage%>" class="detailsphoto"/>
->>>>>>> Stashed changes
 
 <table>
   <tr>
@@ -38,22 +34,32 @@
 </table>
 <br>
 <h3>Ingredients</h3><br>
+
+<center>
+  <ul class = "recipeDetails">
 <%for(let i in recipe.recipeIngredientNames){%>
-  <ul>
+ 
   <%if(recipe.recipeIngredientNames[i].toString() != "" && recipe.recipeIngredientQuantities[i].toString() != ""){%>
+    <div class = "container mx-auto">
   <li><%=recipe.recipeIngredientNames[i].toString() + " – " + recipe.recipeIngredientQuantities[i].toString()%></li>
-  <%}%>
-  </ul>
-<%}%>
+  <br>
+</div>  
+
+  <%}}%>
+  
+
+</ul>
+</center>
 <br>
 <h3>Steps</h3><br>
-<ol>
 <%let recipeStepsSplit = recipe.recipeSteps.split('\r\n');%>
-<ol>
+<div class = "container">
+<ol class = "recipeDetails">
 <%for(let i of recipeStepsSplit){%>
   <li><%=i.toString()%></li>
 <%}%>
 </ol>
+</div>
 <br>
 <h3>Comments</h3>
 <form action="/createComment" method="POST">
