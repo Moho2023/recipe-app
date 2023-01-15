@@ -12,7 +12,6 @@
     </th>
     <td>
       <%=recipe.recipeName%>
-      <%console.log(recipe)%>
     </td>
   </tr>
   <tr>
@@ -76,7 +75,6 @@
 </form>
 <br>
 <%for(comment in comments[recipe.recipeID]){%>
-  <%console.log(comments[recipe.recipeID][comment])%>
   <table>
     <tr>
       <td><b><%=comments[recipe.recipeID][comment].name%></b></td>
