@@ -301,12 +301,3 @@ const port = process.env.PORT || 3000;
 app.listen(port, function() {
   console.log('Server started at http://localhost:'+port+'.')
 });
-
-
-
-/**
- app.get('/yabbadabbadoo')
- */
-
-//
-
